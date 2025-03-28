@@ -42,7 +42,6 @@ pub fn find_smallest_in_list(list: &[isize]) -> Option<(isize, usize)> {
     Some((min, min_idx))
 }
 
-#[derive(Clone)]
 pub struct SelectionSort;
 impl Algorithm<Vec<isize>, Vec<isize>> for SelectionSort {
     fn run(&self, list: Vec<isize>) -> Vec<isize> {
@@ -63,7 +62,6 @@ impl Algorithm<Vec<isize>, Vec<isize>> for SelectionSort {
     }
 }
 
-#[derive(Clone)]
 pub struct BubbleSort;
 impl Algorithm<Vec<isize>, Vec<isize>> for BubbleSort {
     fn run(&self, list: Vec<isize>) -> Vec<isize> {
@@ -91,7 +89,6 @@ mod tests {
         let list = init_random_list(10, min, max);
         assert_eq!(list.len(), 10);
 
-        // Verify values are within expected range
         for &num in &list {
             assert!(num >= min && num < max);
         }
@@ -143,7 +140,7 @@ mod tests {
     #[rstest]
     #[case(SelectionSort, sort_test_cases!())]
     #[case(BubbleSort, sort_test_cases!())]
-    fn test_sort_algorithm<A: Algorithm<Vec<isize>, Vec<isize>> + Clone>(
+    fn test_sort_algorithm<A: Algorithm<Vec<isize>, Vec<isize>>>(
         #[case] sort_algorithm: A,
         #[case] test_cases: [(Vec<isize>, Vec<isize>); 4],
     ) {

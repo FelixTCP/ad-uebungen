@@ -4,7 +4,6 @@ pub fn contains(list: &Vec<isize>, entry: isize) -> bool {
     BinarySearch.run((list.clone(), entry)).is_some()
 }
 
-#[derive(Clone)]
 pub struct BinarySearch;
 impl Algorithm<(Vec<isize>, isize), Option<usize>> for BinarySearch {
     fn run(&self, args: (Vec<isize>, isize)) -> Option<usize> {
@@ -35,7 +34,6 @@ impl Algorithm<(Vec<isize>, isize), Option<usize>> for BinarySearch {
     }
 }
 
-#[derive(Clone)]
 pub struct LinearSearch;
 impl Algorithm<(Vec<isize>, isize), Option<usize>> for LinearSearch {
     fn run(&self, args: (Vec<isize>, isize)) -> Option<usize> {
@@ -68,7 +66,7 @@ mod tests {
         ];
 
         for (list, target, expected) in test_cases {
-            let result = contains(&list.clone(), target);
+            let result = contains(&list, target);
             assert_eq!(result, expected);
         }
     }
@@ -94,12 +92,12 @@ mod tests {
     #[rstest]
     #[case(BinarySearch, search_test_cases!())]
     #[case(LinearSearch, search_test_cases!())]
-    fn test_search_algorithm<A: Algorithm<(Vec<isize>, isize), Option<usize>> + Clone>(
+    fn test_search_algorithm<A: Algorithm<(Vec<isize>, isize), Option<usize>>>(
         #[case] search_algorithm: A,
         #[case] test_cases: [(Vec<isize>, isize, Option<usize>); 8],
     ) {
         for (list, target, expected) in test_cases {
-            let result = search_algorithm.run((list.clone(), target));
+            let result = search_algorithm.run((list, target));
             assert_eq!(result, expected);
         }
     }
