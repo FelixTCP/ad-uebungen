@@ -51,7 +51,7 @@ impl Algorithm<Vec<isize>, Vec<isize>> for SelectionSort {
 
         let mut sort_boundary = 0;
         let mut list = list;
-        for _ in 0..list.len() {
+        for _ in 0..list.len() - 1 {
             let (_, min_idx) = find_smallest_in_list(&list[sort_boundary..]).unwrap();
 
             list.swap(sort_boundary, sort_boundary + min_idx);
