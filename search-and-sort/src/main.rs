@@ -2,6 +2,12 @@ mod sort;
 use sort::*;
 mod search;
 use search::*;
+mod reorder;
+use reorder::*;
+mod misc;
+use misc::*;
+mod hirsch;
+use hirsch::*;
 mod algorithm;
 use algorithm::Algorithm;
 
@@ -10,54 +16,36 @@ use std::io::Write;
 
 fn main() {
     runtime_suite(
-        SelectionSort,
-        "runtime_selection_sort.csv",
-        &[(0..20000, 100), (20000..51000, 1000)],
-        |size| {
-            let range = size as isize;
-            init_random_list(size, -range, range)
-        },
-    );
-
-    runtime_suite(
-        BubbleSort,
-        "runtime_bubble_sort.csv",
-        &[(0..20000, 100), (20000..51000, 1000)],
-        |size| {
-            let range = size as isize;
-            init_random_list(size, -range, range)
-        },
-    );
-
-    runtime_suite(
-        BinarySearch,
-        "runtime_binary_search.csv",
+        GetMinElementOrZero,
+        "runtime_get_min_element_or_zero.csv",
         &[
             (0..20000, 100),
             (20000..50000, 1000),
             (50000..100000, 10000),
-            (100000..1100000, 100000),
         ],
         |size| {
-            let list: Vec<isize> = (0..size as isize).collect();
-            let target = (size as isize) - 1;
-            (list, target)
+            let mut list: Vec<isize> = (0..size as isize).collect();
+            list.push(-1);
+            list
         },
     );
 
     runtime_suite(
-        LinearSearch,
-        "runtime_linear_search.csv",
+        HirschIndex,
+        "runtime_hirsch_index.csv",
         &[
             (0..20000, 100),
             (20000..50000, 1000),
             (50000..100000, 10000),
-            (100000..1100000, 100000),
         ],
         |size| {
-            let list: Vec<isize> = (0..size as isize).collect();
-            let target = (size as isize) - 1;
-            (list, target)
+            let mut list = vec![0; size * 10];
+
+            for i in 0..list.len() {
+                list[i] = rand::random::<usize>() % size;
+            }
+
+            list
         },
     );
 }
