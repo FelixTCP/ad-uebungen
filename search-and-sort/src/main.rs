@@ -16,21 +16,6 @@ use std::io::Write;
 
 fn main() {
     runtime_suite(
-        GetMinElementOrZero,
-        "runtime_get_min_element_or_zero.csv",
-        &[
-            (0..20000, 100),
-            (20000..50000, 1000),
-            (50000..100000, 10000),
-        ],
-        |size| {
-            let mut list: Vec<isize> = (0..size as isize).collect();
-            list.push(-1);
-            list
-        },
-    );
-
-    runtime_suite(
         HirschIndex,
         "runtime_hirsch_index.csv",
         &[
