@@ -78,6 +78,34 @@ impl Algorithm<Vec<isize>, Vec<isize>> for BubbleSort {
     }
 }
 
+pub struct IterativeMerge;
+impl Algorithm<Vec<Vec<isize>>, Vec<isize>> for IterativeMerge {
+    fn run(&self, list: Vec<Vec<isize>>) -> Vec<isize> {
+        let mut sorted = list[0].clone();
+        for l in &list[1..] {
+            sorted = self.merge(sorted, l);
+        }
+        sorted
+    }
+}
+
+impl IterativeMerge {
+    fn merge(&self, mut sorted: Vec<isize>, new: &Vec<isize>) -> Vec<isize> {
+        let mut s = 0;
+        let mut n = 0;
+
+        while n < new.len() {
+            if sorted[s] >= new[n] {
+                sorted.insert(s, new[n]);
+                n += 1;
+            } else {
+                s += 1;
+            }
+        }
+        sorted
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -122,6 +150,13 @@ mod tests {
             let result = is_sorted(&list);
             assert_eq!(result, expected);
         }
+    }
+
+    #[test]
+    fn test_iterative_merge() {
+        let list = vec![vec![3, 6, 7], vec![1], vec![2, 4]];
+
+        assert!(is_sorted(&IterativeMerge.run(list)))
     }
 
     use rstest::rstest;
